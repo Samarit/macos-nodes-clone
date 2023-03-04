@@ -1,13 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import TopBar from './components/TopBar'
+import SideBar from './components/SideBar'
+import Main from './components/Main'
+import { AppContextProvider } from './AppContext'
+import Box from '@mui/material/Box'
 
 function App() {
 
   return (
-    <div className="App">
-      
-    </div>
+    <AppContextProvider>
+      <div className="App" 
+        style={{
+          position: 'fixed',
+          top: '0',
+          right: '0',
+          left: '0',
+          bottom: '0'
+        }}>
+
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gridTemplateRows: '44px 1fr',
+          height: '100%',
+          bgcolor: '#333',
+          color: "#eee"
+        }}>
+
+          <TopBar />
+          <SideBar />
+          <Main />
+
+        </Box>
+      </div>
+    </AppContextProvider>
   )
 }
 
