@@ -8,15 +8,17 @@ export interface INote {
   editDate: number,
 }
 
-type NodeListView = "list" | "tile" // View toggle type
+type NoteListView = "list" | "tile" // View toggle type
+type ActiveNoteId = number | null
 
 // NoteList context interface
 interface INoteListContext {
   notes: INote[] | [],
   setNotes: React.Dispatch<React.SetStateAction<INote[] | []>>,
-  notesView: NodeListView,
-  setNotesView: React.Dispatch<React.SetStateAction<NodeListView>>
-    
+  notesView: NoteListView,
+  setNotesView: React.Dispatch<React.SetStateAction<NoteListView>>,
+  activeNoteId: ActiveNoteId,
+  setActiveNoteId: React.Dispatch<React.SetStateAction<ActiveNoteId>>
 }
 
 // Create context
@@ -32,7 +34,7 @@ const useNoteListContext = () => {
 }
 
 // Get localStorage NodeList
-const noteList: INote[] = JSON.parse(localStorage.getItem("noteList") || "{}")
+const noteList: INote[] | [] = JSON.parse(localStorage.getItem("noteList") || "[]")
 
 // NoteList context provider component
 const NoteListContextProvider : React.FC<React.PropsWithChildren> = ( {children} ) => {
@@ -40,11 +42,13 @@ const NoteListContextProvider : React.FC<React.PropsWithChildren> = ( {children}
   // notes list data state
   const [notes, setNotes] = useState( noteList )
   // notes list view state
-  const [notesView, setNotesView] = useState<NodeListView>("list")
+  const [notesView, setNotesView] = useState<NoteListView>("list")
+  // Active note state
+  const [activeNoteId, setActiveNoteId] = useState<ActiveNoteId>(null)
 
 
   return (
-    <NoteListContext.Provider value={{notes, setNotes, notesView, setNotesView}}>
+    <NoteListContext.Provider value={{notes, setNotes, notesView, setNotesView, activeNoteId, setActiveNoteId}}>
       {children}
     </NoteListContext.Provider>
   )

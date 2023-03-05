@@ -1,10 +1,12 @@
+
+import { List } from "@mui/material";
 import { useNoteListContext } from "../NoteListContext"
 import Note from "./Note";
 
 export default function SideBar() {
 
   const context = useNoteListContext()
-  const {notes, setNotes, notesView } = context
+  const {notes, activeNoteId, setActiveNoteId } = context
 
   return (
       <div className="sidebar"
@@ -14,11 +16,19 @@ export default function SideBar() {
         flexDirection: 'column'
       }}>
         <span>Sidebar</span>
-        <ul>
-          {notes.map((note) => {
-            return <li key={note.id}><Note {...note} /></li>
-          })}
-        </ul>
+
+        <List>
+          {
+            notes.length != 0 ?
+              notes.map((note) => {
+                return <Note note={note} key={note.id}/>
+              }) 
+              : 'Пока нет никаких заметок'
+          }
+
+          
+            
+        </List>
       </div>
   )
 }

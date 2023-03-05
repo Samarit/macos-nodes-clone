@@ -1,10 +1,26 @@
-import { INote } from "../NoteListContext"
+import { INote, useNoteListContext } from "../NoteListContext"
+import ListItem from '@mui/material/ListItem'
+import { ListItemText } from "@mui/material"
 
-export default function Note(props : INote) {
+type Props = {
+  note: INote
+}
+
+export default function Note( props: Props  ) {
+
+  const {id, title, text, editDate} = props.note
+  
+  const {activeNoteId, setActiveNoteId} = useNoteListContext()
+
+  const clickHandler = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    setActiveNoteId(id)
+  }
+
   return (
-    <div className="note">
-      <p>{props.title}</p>
-      <span>{props.text}</span>
-    </div>
+    <ListItem className={`note ${activeNoteId === id ? 'active' : ''}`} onClick={clickHandler} key={id}>
+      <ListItemText primary={title} secondary={text}>
+        
+      </ListItemText>
+    </ListItem>
   )
 }
