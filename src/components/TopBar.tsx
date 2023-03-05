@@ -2,6 +2,7 @@ import AppBar from '@mui/material/AppBar'
 import { alpha, InputBase, styled } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteButton from './DeleteButton';
+import CreateButton from './CreateButton';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -51,6 +52,7 @@ export default function TopBar() {
         }}>
           TopBar
 
+          <CreateButton />
           <DeleteButton />
 
           <Search>
